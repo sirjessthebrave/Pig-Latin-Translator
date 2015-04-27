@@ -1,0 +1,9 @@
+#English {
+    width:600px;
+    height:300px;
+    margin: 50px 0px 50px 0px;
+}
+
+.header-title {
+    font: 700 oblique 48px "Playfair Display";
+}
