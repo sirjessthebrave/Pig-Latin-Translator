@@ -4,7 +4,8 @@ var englishString = "";
 
 var vowelRule = /[aeiou]/i;
 var consonantsRule = /[bcdfghjklmnpqrstvwxyz]/i;
-var punctuationRule = /.?/i;
+var punctuationRule = /\W/g;
+var capitalizationRule = /[A-Z]/;
 
 function getEnglish() {
     
@@ -29,57 +30,187 @@ function outputPigLatin() {
     
 }
 
+
+function handleVowels(word) {
+           
+    word += "way ";
+       
+    return word;
+    
+}
+
+function handleConsonants(word) {
+
+    var firstLetter = word.charAt(0);
+    
+    word = word.slice(1);
+    
+    word += firstLetter + "ay";
+    
+    return word;
+    
+}
+
+function handleDoubleConsonants(word) {
+    
+    var firstLetter = word.charAt(0);
+    var secondLetter = word.charAt(1);
+    
+    word = word.slice(2);
+    
+    word += firstLetter + secondLetter + "ay";
+        
+    return word;
+    
+}
+
+function recapitalize(word) {
+        
+    var firstLetter = word.charAt(0);
+    
+    word = word.toLowerCase();
+    word = word.slice(1);
+    
+    firstLetter = firstLetter.toUpperCase();
+    
+    word = firstLetter + word;
+    
+    return word;
+    
+}
+
+function checkCapitalization(word) {
+    
+    var recapitalize;
+    var firstLetter = word.charAt(0);
+    var capitalMatch = capitalizationRule.exec(firstLetter);
+        
+    if (capitalMatch) {
+            
+        recapitalize = true;
+        
+    }
+        
+    else {
+            
+        recapitalize = false;
+            
+    }
+    
+    return recapitalize;
+    
+}
+
+function checkPunctuation(word) {
+    
+    console.log("Checking punctation of word: " + word);
+    
+    var hasPunctuation;
+    var punctuationMatch = punctuationRule.exec(word);
+    
+    console.log("Punctuation match is: " + punctuationMatch);
+    
+    if (punctuationMatch) {
+        
+        hasPunctuation = true;
+        
+    }
+    
+    else {
+        
+        hasPunctuation = false;
+        
+    }
+    
+    console.log("Value of hasPunctuation is " + hasPunctuation);
+    
+    return hasPunctuation;
+    
+}
+
+function removePunctuation(word) {
+
+    var punctuationMatch = punctuationRule.exec(word);
+    
+    var newWord = word.replace(punctuationMatch, "");
+    
+    console.log("Remove punctuation: " + newWord);
+    
+    return newWord;
+
+}
+
 function convertEnglishToPigLatin() {
     
     var englishWord;
-    var firstLetter;
     
-    for (i = 0; i < englishArray.length; i++) {
+    for (var i = 0; i < englishArray.length; i++) {
         
         englishWord = englishArray[i];
         
-        firstLetter = englishWord.charAt(0);
-        secondLetter = englishWord.charAt(1);
+        console.log("englishWord at beginning of array: " + englishWord);
+        
+        var firstLetter = englishWord.charAt(0);
+        var secondLetter = englishWord.charAt(1);
         
         var vowelMatch = vowelRule.exec(firstLetter);
         var consonantMatch = consonantsRule.exec(firstLetter);
         var doubleConsonantMatch = consonantsRule.exec(secondLetter);
         
-        var wordLength = englishWord.length;
-        var lastLetterNumber = wordLength - 1;
-        var lastLetter = englishWord.charAt(lastLetterNumber);
+        // englishWord = removePunctuation(englishWord);
         
-        // Add "way" to the end of the word if it starts with a vowel
+        //console.log("englishWord after removepunction: " + englishWord);
+        
+        checkCapitalization(englishWord);
+        
+        checkPunctuation(englishWord);
+        
+        //console.log("checkPunctuation result: " + checkPunctuation(englishWord));
         
         if (vowelMatch) {
             
-            englishWord += "way";
+            englishWord = handleVowels(englishWord);
             
-            englishString += englishWord + " ";
-            
-        }
-        
-        if (consonantMatch && doubleConsonantMatch) {
-            
-            // remove the first two letters
-            englishWord = englishWord.substring(2,wordLength);
-            
-            englishWord += firstLetter + secondLetter + "ay";
-            
-            englishString += englishWord + " ";
+            console.log("englishWord after checking vowels: " + englishWord);
             
         }
         
         if (consonantMatch && !doubleConsonantMatch) {
             
-            // remove the first letter
-            englishWord = englishWord.substring(1,wordLength);
+            englishWord = handleConsonants(englishWord);
             
-            englishWord += firstLetter + "ay";
-            
-            englishString += englishWord + " ";
+            console.log("englishWord after checking consonants: " + englishWord);
             
         }
+        
+        if (consonantMatch && doubleConsonantMatch) {
+            
+            englishWord = handleDoubleConsonants(englishWord);
+            
+            console.log("englishWord after checking double consonants: " + englishWord);
+            
+        }
+        
+        if (checkCapitalization == true) {
+            
+            englishWord = recapitalize(englishWord);
+            
+            console.log("englishWord after recapitalizing: " + englishWord);
+        }
+        
+        console.log("Before check punctuation function");
+        
+        if (checkPunctuation(englishWord) == true) {
+            
+            console.log("checking punctuation function conditional");
+            
+            alert("has punctuation!");
+            
+        }
+        
+        console.log("englishWord right before adding to englishString array: " + englishWord);
+        
+        englishString += englishWord + " ";
         
     }
     
