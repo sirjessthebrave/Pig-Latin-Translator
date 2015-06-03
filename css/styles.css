@@ -1,13 +1,51 @@
+.header-title {
+    font: 700 oblique 4em "Playfair Display";
+}
+
 #English {
-    width:600px;
-    height:300px;
+    width:50%;
+    height:200px;
     margin: 50px 0px 50px 0px;
+    border: 1px solid #888;
 }
 
 #textOutput {
     margin: 20px 0px 20px 0px;
+    width: 50%;
+    margin: auto;
+    text-align: justify;
 }
 
-.header-title {
-    font: 700 oblique 48px "Playfair Display";
+#PigLatinContainer {
+    margin-top: 20px;
+}
+
+#PigLatinContainer h2 {
+    font: 700 oblique 2em "Playfair Display";
+}
+
+#Convert, .SourceCode {
+    margin: auto;
+    padding: 5px;
+    font-weight: bold;
+    border: 1px solid #888;
+    background: #D8D8D8;
+    background: rgba(0,0,0,0.1);
+}
+
+.SourceCode {
+    width: 10%;
+}
+
+#Convert:hover, .SourceCode:hover {
+    box-shadow: 1px 1px 1px #888;
+}
+
+.SourceCode a, .SourceCode a:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+#SourceCodeContainer {
+    margin-top: 30px;
 }

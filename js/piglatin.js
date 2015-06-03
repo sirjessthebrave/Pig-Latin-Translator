@@ -202,9 +202,7 @@ function convertEnglishToPigLatin() {
         
         if (checkPunctuation(englishWord) == true) {
             
-            console.log("checking punctuation function conditional");
-            
-            alert("has punctuation!");
+            console.log("has punctuation!");
             
         }
         
