@@ -1,11 +1,9 @@
-var outputArea = document.getElementById("textOutput");
-var englishArray;
-var englishString = "";
-
-var vowelRule = /[aeiou]/i;
-var consonantsRule = /[bcdfghjklmnpqrstvwxyz]/i;
-var punctuationRule = /\W/g;
-var capitalizationRule = /[A-Z]/;
+var regularExpressions = {
+    vowelRule: /[aeiou]/i,
+    consonantsRule: /[bcdfghjklmnpqrstvwxyz]/i,
+    punctuationRule: /\W/g,
+    capitalizationRule: /[A-Z]/
+};
 
 function getEnglish() {
     
@@ -28,20 +26,19 @@ function startTranslation() {
     
     var englishText = getEnglish();
     
-    englishArray = splitIntoArray(englishText);
+    var englishArray = splitIntoArray(englishText);
     
-    outputPigLatin();
+    outputPigLatin(englishArray);
     
 }
 
-function outputPigLatin() {
+function outputPigLatin(englishArray) {
     
-    // remove old text
-    englishString = "";
+    var pigLatinArray = convertEnglishToPigLatin(englishArray);
     
-    convertEnglishToPigLatin();
+    var outputArea = document.getElementById("textOutput");
     
-    outputArea.innerHTML = englishString;
+    outputArea.innerHTML = pigLatinArray;
     
 }
 
@@ -98,7 +95,7 @@ function checkCapitalization(word) {
     
     var recapitalize;
     var firstLetter = word.charAt(0);
-    var capitalMatch = capitalizationRule.exec(firstLetter);
+    var capitalMatch = regularExpressions.capitalizationRule.exec(firstLetter);
         
     if (capitalMatch) {
             
@@ -119,7 +116,7 @@ function checkCapitalization(word) {
 function checkPunctuation(word) {
     
     var hasPunctuation;
-    var punctuationMatch = punctuationRule.exec(word);
+    var punctuationMatch = regularExpressions.punctuationRule.exec(word);
     
     if (punctuationMatch) {
         
@@ -139,7 +136,7 @@ function checkPunctuation(word) {
 
 function removePunctuation(word) {
 
-    var punctuationMatch = punctuationRule.exec(word);
+    var punctuationMatch = regularExpressions.punctuationRule.exec(word);
     
     var newWord = word.replace(punctuationMatch, "");
     
@@ -147,21 +144,10 @@ function removePunctuation(word) {
 
 }
 
-function handleFirstLetter(word) {
-
-    
-
-}
-
-function NEWconvertEnglishToPigLatin() {
-    
-    alert("new function!");
-    
-}
-
-function convertEnglishToPigLatin() {
+function convertEnglishToPigLatin(englishArray) {
     
     var englishWord;
+    var pigLatinArray = [];
     
     for (var i = 0; i < englishArray.length; i++) {
         
@@ -170,9 +156,9 @@ function convertEnglishToPigLatin() {
         var firstLetter = englishWord.charAt(0);
         var secondLetter = englishWord.charAt(1);
         
-        var vowelMatch = vowelRule.exec(firstLetter);
-        var consonantMatch = consonantsRule.exec(firstLetter);
-        var doubleConsonantMatch = consonantsRule.exec(secondLetter);
+        var vowelMatch = regularExpressions.vowelRule.exec(firstLetter);
+        var consonantMatch = regularExpressions.consonantsRule.exec(firstLetter);
+        var doubleConsonantMatch = regularExpressions.consonantsRule.exec(secondLetter);
         
         checkCapitalization(englishWord);
         
@@ -207,8 +193,10 @@ function convertEnglishToPigLatin() {
             removePunctuation(englishWord);
         }
         
-        englishString += englishWord + " ";
+        pigLatinArray += englishWord + " ";
         
     }
+    
+    return pigLatinArray;
     
 }
