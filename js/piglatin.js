@@ -147,18 +147,6 @@ function removePunctuation(word) {
 
 }
 
-function handleFirstLetter(word) {
-
-    
-
-}
-
-function NEWconvertEnglishToPigLatin() {
-    
-    alert("new function!");
-    
-}
-
 function convertEnglishToPigLatin() {
     
     var englishWord;
