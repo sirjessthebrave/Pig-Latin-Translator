@@ -2,9 +2,9 @@ describe("First Letter Tests", function() {
     
     describe("First letter is a vowel", function() {
         
-        it("Should have -way plus a space added to the word", function() {
+        it("Should have -way added to the word", function() {
       
-            expect(handleVowels("eggs")).toEqual("eggsway ");
+            expect(handleVowels("eggs")).toEqual("eggsway");
         
         });
         
@@ -39,7 +39,7 @@ describe("Capitalization tests", function() {
        
        it("Should recapitalize the word", function() {
           
-          expect(recapitalize("Toast")).toEqual("Toast");
+            expect(recapitalize("Toast")).toEqual("Toast");
            
        });
        
@@ -49,13 +49,13 @@ describe("Capitalization tests", function() {
        
        it("Should return true if the first letter of the word is capitalized", function(){
           
-          expect(checkCapitalization("Toast")).toEqual(true);
+            expect(checkCapitalization("Toast")).toEqual(true);
            
        });
        
         it("Should return false if the first letter of the word is not capitalized", function(){
           
-          expect(checkCapitalization("toast")).toEqual(false);
+            expect(checkCapitalization("toast")).toEqual(false);
            
        });
        
@@ -69,13 +69,13 @@ describe("Punctuation tests", function(){
        
        it("Should return true if the word contains punctuation", function(){
           
-          expect(checkPunctuation("don't")).toEqual(true); 
+            expect(checkPunctuation("don't")).toEqual(true); 
            
        });
        
         it("Should return false if the word does not contain punctuation", function(){
           
-          expect(checkPunctuation("hello")).toEqual(false); 
+            expect(checkPunctuation("hello")).toEqual(false); 
            
        });
         
@@ -85,9 +85,32 @@ describe("Punctuation tests", function(){
        
        it("Should remove any punctuation marks from the word", function(){
            
-          expect(removePunctuation("don't")).toEqual("dont");
+            expect(removePunctuation("don't")).toEqual("dont");
            
        });
+       
+       it("Should re-add allowed punctuation marks", function(){
+          
+            expect(removePunctuation("hey,")).toEqual("hey,");
+           
+       });
+        
+    });
+    
+});
+
+
+describe("Translation tests", function(){
+    
+    describe("Convert a whole sentence to Pig Latin", function(){
+        
+        it("Should add appropriate ending based on first letter plus handle punctuation and capitalization", function(){
+            
+            var array = ["Hey,","what's","up?"];
+            
+            expect(convertEnglishToPigLatin(array)).toEqual("Eyhay, atswhay upway? ");
+            
+        });
         
     });
     

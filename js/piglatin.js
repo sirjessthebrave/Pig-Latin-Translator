@@ -1,7 +1,9 @@
+"use strict";
+
 var regularExpressions = {
     vowelRule: /[aeiou]/i,
     consonantsRule: /[bcdfghjklmnpqrstvwxyz]/i,
-    punctuationRule: /\W/g,
+    punctuationRule: /[.!,?'\\-]/,
     capitalizationRule: /[A-Z]/
 };
 
@@ -22,16 +24,6 @@ function splitIntoArray(inputText) {
     
 }
 
-function startTranslation() {
-    
-    var englishText = getEnglish();
-    
-    var englishArray = splitIntoArray(englishText);
-    
-    outputPigLatin(englishArray);
-    
-}
-
 function outputPigLatin(englishArray) {
     
     var pigLatinArray = convertEnglishToPigLatin(englishArray);
@@ -42,10 +34,9 @@ function outputPigLatin(englishArray) {
     
 }
 
-
 function handleVowels(word) {
            
-    word += "way ";
+    word += "way";
        
     return word;
     
@@ -95,7 +86,7 @@ function checkCapitalization(word) {
     
     var recapitalize;
     var firstLetter = word.charAt(0);
-    var capitalMatch = regularExpressions.capitalizationRule.exec(firstLetter);
+    var capitalMatch = regularExpressions.capitalizationRule.test(firstLetter);
         
     if (capitalMatch) {
             
@@ -116,7 +107,7 @@ function checkCapitalization(word) {
 function checkPunctuation(word) {
     
     var hasPunctuation;
-    var punctuationMatch = regularExpressions.punctuationRule.exec(word);
+    var punctuationMatch = regularExpressions.punctuationRule.test(word);
     
     if (punctuationMatch) {
         
@@ -134,63 +125,75 @@ function checkPunctuation(word) {
     
 }
 
-function removePunctuation(word) {
-
-    var punctuationMatch = regularExpressions.punctuationRule.exec(word);
+function removePunctuation(englishWord) {
     
-    var newWord = word.replace(punctuationMatch, "");
+    var punctuationMatch = regularExpressions.punctuationRule.exec(englishWord);
+    
+    var newWord = englishWord.replace(punctuationMatch, "");
+    
+    if(punctuationMatch == "?" || punctuationMatch == "!" || punctuationMatch == "." || punctuationMatch == ",") {
+        
+        newWord = newWord + punctuationMatch;
+        
+    }
     
     return newWord;
 
 }
 
+function handleWords(word) {
+    
+    var firstLetter = word.charAt(0);
+    var secondLetter = word.charAt(1);
+
+    var vowelMatch = regularExpressions.vowelRule.test(firstLetter);
+    var consonantMatch = regularExpressions.consonantsRule.test(firstLetter);
+    var doubleConsonantMatch = regularExpressions.consonantsRule.test(secondLetter);
+ 
+    if (vowelMatch) {
+            
+        word = handleVowels(word);
+            
+    }
+        
+    if (consonantMatch && !doubleConsonantMatch) {
+            
+        word = handleConsonants(word);
+            
+    }
+        
+    if (consonantMatch && doubleConsonantMatch) {
+            
+        word = handleDoubleConsonants(word);
+            
+    }
+    
+    return word;
+    
+}
+
 function convertEnglishToPigLatin(englishArray) {
     
-    var englishWord;
     var pigLatinArray = [];
     
     for (var i = 0; i < englishArray.length; i++) {
         
-        englishWord = englishArray[i];
+        var englishWord = englishArray[i];
         
-        var firstLetter = englishWord.charAt(0);
-        var secondLetter = englishWord.charAt(1);
+        var isCapitalized = checkCapitalization(englishWord);
+        var hasPunctuation = checkPunctuation(englishWord);
         
-        var vowelMatch = regularExpressions.vowelRule.exec(firstLetter);
-        var consonantMatch = regularExpressions.consonantsRule.exec(firstLetter);
-        var doubleConsonantMatch = regularExpressions.consonantsRule.exec(secondLetter);
+        englishWord = handleWords(englishWord);
         
-        checkCapitalization(englishWord);
-        
-        checkPunctuation(englishWord);
-        
-        if (vowelMatch) {
-            
-            englishWord = handleVowels(englishWord);
-            
-        }
-        
-        if (consonantMatch && !doubleConsonantMatch) {
-            
-            englishWord = handleConsonants(englishWord);
-            
-        }
-        
-        if (consonantMatch && doubleConsonantMatch) {
-            
-            englishWord = handleDoubleConsonants(englishWord);
-            
-        }
-        
-        if (checkCapitalization == true) {
+        if (isCapitalized === true) {
             
             englishWord = recapitalize(englishWord);
 
         }
         
-        if (checkPunctuation(englishWord) == true) {
+        if (hasPunctuation == true) {
             
-            removePunctuation(englishWord);
+            englishWord = removePunctuation(englishWord);
         }
         
         pigLatinArray += englishWord + " ";
@@ -198,5 +201,15 @@ function convertEnglishToPigLatin(englishArray) {
     }
     
     return pigLatinArray;
+    
+}
+
+function startTranslation() {
+    
+    var englishText = getEnglish();
+    
+    var englishArray = splitIntoArray(englishText);
+    
+    outputPigLatin(englishArray);
     
 }
