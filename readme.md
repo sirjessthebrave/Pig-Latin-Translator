@@ -2,7 +2,6 @@
 
 Practice project to work on my JavaScript skills
 
-## Current issues
+## Current Issues
 
-- Punctuation handling
-- Capitalization handling
+- Does not expand common contractions, such as don't and isn't
