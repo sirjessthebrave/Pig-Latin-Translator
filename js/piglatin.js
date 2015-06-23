@@ -170,7 +170,7 @@ function handleWords(word) {
 
 function convertEnglishToPigLatin(englishArray) {
     
-    var pigLatinArray = [];
+    var pigLatinString = "";
     
     for (var i = 0; i < englishArray.length; i++) {
         
@@ -192,11 +192,11 @@ function convertEnglishToPigLatin(englishArray) {
             englishWord = removePunctuation(englishWord);
         }
         
-        pigLatinArray += englishWord + " ";
+        pigLatinString += englishWord + " ";
         
     }
     
-    return pigLatinArray;
+    return pigLatinString;
     
 }
 
