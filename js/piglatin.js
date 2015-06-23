@@ -92,9 +92,7 @@ function checkCapitalization(word) {
             
         recapitalize = true;
         
-    }
-        
-    else {
+    } else {
             
         recapitalize = false;
             
@@ -113,9 +111,7 @@ function checkPunctuation(word) {
         
         hasPunctuation = true;
         
-    }
-    
-    else {
+    } else {
         
         hasPunctuation = false;
         
@@ -191,7 +187,7 @@ function convertEnglishToPigLatin(englishArray) {
 
         }
         
-        if (hasPunctuation == true) {
+        if (hasPunctuation === true) {
             
             englishWord = removePunctuation(englishWord);
         }
